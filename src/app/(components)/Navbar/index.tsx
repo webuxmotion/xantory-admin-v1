@@ -1,13 +1,32 @@
 "use client";
 
-import { AlignJustify, LogOut, Settings, Sun } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/redux/redux";
+import { setIsDarkMode, setIsSidebarCollapsed } from "@/redux/state";
+import {
+  AlignJustify,
+  LogOut,
+  Sunrise,
+  Sunset,
+  UserRoundCog,
+} from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
-  const toggleSidebar = () => {};
+  const dispatch = useAppDispatch();
 
-  const toggleDarkMode = () => {};
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed
+  );
+  const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
+
+  const toggleSidebar = () => {
+    dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
+  };
+
+  const toggleDarkMode = () => {
+    dispatch(setIsDarkMode(!isDarkMode));
+  };
 
   return (
     <div className="flex justify-between items-center w-full mb-7 pl-10">
@@ -26,15 +45,22 @@ const Navbar = () => {
         <div className="hidden md:flex justify-between items-center gap-5">
           <div>
             <button onClick={toggleDarkMode}>
-              <Sun className="cursor-pointer text-gray-500" size={24} />
+              {isDarkMode ? (
+                <Sunrise className="cursor-pointer text-gray-500" size={24} />
+              ) : (
+                <Sunset className="cursor-pointer text-gray-500" size={24} />
+              )}
             </button>
           </div>
 
           <hr className="w-0 h-7 border border-solid border-l border-gray-300 mx-3" />
-          
+
           <div>
             <Link href="/settings" className="p-0">
-              <Settings className="cursor-pointer text-gray-500 -mt-1" size={24} />
+              <UserRoundCog
+                className="cursor-pointer text-gray-500 -mt-1"
+                size={24}
+              />
             </Link>
           </div>
 

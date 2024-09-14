@@ -1,5 +1,7 @@
 "use client";
  
+import { useAppDispatch, useAppSelector } from "@/redux/redux";
+import { setIsSidebarCollapsed } from "@/redux/state";
 import {
   LayoutDashboard,
   LucideIcon,
@@ -53,12 +55,15 @@ const SidebarLink = ({
 };
  
 const Sidebar = () => {
+  const dispatch = useAppDispatch();
+ 
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed
+  );
  
   const toggleSidebar = () => {
- 
+    dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
   };
- 
-  const isSidebarCollapsed = false;
  
   const sidebarClassNames = `fixed flex flex-col ${
     isSidebarCollapsed ? "w-0 md:w-16" : "w-80"
@@ -79,6 +84,15 @@ const Sidebar = () => {
           } font-extrabold text-3xl`}
         >
           XANTORY
+        </Link>
+
+        <Link
+          href="/"
+          className={`${
+            isSidebarCollapsed ? "block" : "hidden"
+          } font-extrabold text-3xl`}
+        >
+          X
         </Link>
  
         <button
