@@ -4,16 +4,19 @@ import { useAppDispatch, useAppSelector } from "@/redux/redux";
 import { setIsDarkMode, setIsSidebarCollapsed } from "@/redux/state";
 import {
   AlignJustify,
+  KeyRound,
   LogOut,
   Sunrise,
   Sunset,
   UserRoundCog,
 } from "lucide-react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
+  const { data: session } = useSession();
 
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed
@@ -53,24 +56,37 @@ const Navbar = () => {
             </button>
           </div>
 
+          {session ? (
+            <>
+              <hr className="w-0 h-7 border border-solid border-l border-gray-300 mx-3" />
+
+              <div>
+                <Link href="/settings" className="p-0">
+                  <UserRoundCog
+                    className="cursor-pointer text-gray-500 -mt-1"
+                    size={24}
+                  />
+                </Link>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+
           <hr className="w-0 h-7 border border-solid border-l border-gray-300 mx-3" />
-
-          <div>
-            <Link href="/settings" className="p-0">
-              <UserRoundCog
-                className="cursor-pointer text-gray-500 -mt-1"
-                size={24}
-              />
-            </Link>
-          </div>
-
-          <hr className="w-0 h-7 border border-solid border-l border-gray-300 mx-3" />
-
-          <div>
-            <button>
-              <LogOut className="cursor-pointer text-gray-500" size={24} />
-            </button>
-          </div>
+          {session ? (
+            <div>
+              <button onClick={() => signOut()}>
+                <LogOut className="cursor-pointer text-gray-500" size={24} />
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button onClick={() => signIn()}>
+                <KeyRound className="cursor-pointer text-gray-500" size={24} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
