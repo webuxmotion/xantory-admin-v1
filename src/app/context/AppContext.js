@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from "react";
-import { AppReducer, initialState } from "./AppReducer";
+import { AppReducer, initialState, persistIgnore } from "./AppReducer";
 
 const AppContext = createContext();
 
@@ -11,12 +11,22 @@ export function AppWrapper({ children }) {
   }, [state, dispatch]);
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("state"))) { 
-      //checking if there already is a state in localstorage
+    const stateFromLocalStorage = JSON.parse(localStorage.getItem("state"));
+
+    if (stateFromLocalStorage) { 
+      const persistedStateWithIgnoredInitialProperties = {};
+      
+      for (const [key, value] of Object.entries(stateFromLocalStorage)) {
+        if (persistIgnore.includes(key) && Object.hasOwn(initialState, key)) {
+          persistedStateWithIgnoredInitialProperties[key] = initialState[key];
+        } else {
+          persistedStateWithIgnoredInitialProperties[key] = value;
+        }
+      }
+
       dispatch({
         type: "init_stored",
-        value: JSON.parse(localStorage.getItem("state")), 
-        //if yes, update the current state with the stored one
+        value: persistedStateWithIgnoredInitialProperties,
       });
     }
   }, []);
@@ -24,7 +34,6 @@ export function AppWrapper({ children }) {
   useEffect(() => {
     if (state !== initialState) {
       localStorage.setItem("state", JSON.stringify(state)); 
-      //create and/or set a new localstorage variable called "state"
     }
   }, [state]);
 

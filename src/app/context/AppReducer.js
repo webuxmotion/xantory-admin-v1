@@ -4,6 +4,8 @@ export const initialState = {
   isDarkMode: false,
 };
 
+export const persistIgnore = [];
+
 export const AppReducer = (state, action) => {
   switch (action.type) {
     case "init_stored": {
