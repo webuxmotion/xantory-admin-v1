@@ -1,7 +1,6 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "@/redux/redux";
-import { setIsDarkMode, setIsSidebarCollapsed } from "@/redux/state";
+import { useAppContext } from "@/app/context/AppContext";
 import {
   AlignJustify,
   LogOut,
@@ -13,19 +12,23 @@ import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
-  const dispatch = useAppDispatch();
-
-  const isSidebarCollapsed = useAppSelector(
-    (state) => state.global.isSidebarCollapsed
-  );
-  const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
+  const {
+    state: { isDarkMode, isSidebarCollapsed },
+    dispatch,
+  } = useAppContext();
 
   const toggleSidebar = () => {
-    dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
+    dispatch({
+      type: "set_is_sidebar_collapsed",
+      value: !isSidebarCollapsed,
+    });
   };
 
   const toggleDarkMode = () => {
-    dispatch(setIsDarkMode(!isDarkMode));
+    dispatch({
+      type: "set_is_dark_mode",
+      value: !isDarkMode,
+    });
   };
 
   return (

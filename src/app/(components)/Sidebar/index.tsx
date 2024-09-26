@@ -1,7 +1,6 @@
 "use client";
  
-import { useAppDispatch, useAppSelector } from "@/redux/redux";
-import { setIsSidebarCollapsed } from "@/redux/state";
+import { useAppContext } from "@/app/context/AppContext";
 import {
   LayoutDashboard,
   LucideIcon,
@@ -28,7 +27,7 @@ const SidebarLink = ({
   const pathname = usePathname();
   const isActive =
     pathname === href || (pathname === "/" && href === "/dashboard");
- 
+
   return (
     <Link href={href}>
       <div
@@ -55,14 +54,16 @@ const SidebarLink = ({
 };
  
 const Sidebar = () => {
-  const dispatch = useAppDispatch();
- 
-  const isSidebarCollapsed = useAppSelector(
-    (state) => state.global.isSidebarCollapsed
-  );
+  const {
+    state: { isSidebarCollapsed },
+    dispatch
+  } = useAppContext();
  
   const toggleSidebar = () => {
-    dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
+    dispatch({
+      type: "set_is_sidebar_collapsed",
+      value: !isSidebarCollapsed,
+    });
   };
  
   const sidebarClassNames = `fixed flex flex-col ${
