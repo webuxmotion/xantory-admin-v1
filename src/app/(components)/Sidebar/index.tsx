@@ -2,6 +2,7 @@
  
 import { useAppContext } from "@/app/context/AppContext";
 import {
+  Candy,
   LayoutDashboard,
   LucideIcon,
   Menu,
@@ -109,6 +110,12 @@ const Sidebar = () => {
           href="/dashboard"
           icon={LayoutDashboard}
           label="Dashboard"
+          isCollapsed={isSidebarCollapsed}
+        />
+        <SidebarLink
+          href="/products"
+          icon={Candy}
+          label="Products"
           isCollapsed={isSidebarCollapsed}
         />
         <SidebarLink

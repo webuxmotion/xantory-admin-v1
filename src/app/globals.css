@@ -14,5 +14,25 @@ body,
 .app {
   height: 100%;
   width: 100%;
-  @apply text-base bg-gray-500 text-gray-900;
+  @apply text-base bg-gray-500 text-gray-900 mb-2;
+}
+
+input, textarea {
+  @apply border-2 border-gray-200 mb-2 rounded-md px-1 py-1 bg-gray-50;
+}
+
+input:focus, textarea:focus {
+  @apply border-blue-900;
+}
+
+h1 {
+  @apply mb-2 text-xl;
+}
+
+label {
+  @apply mb-1;
+}
+
+.btn-primary {
+  @apply bg-blue-500 text-white px-4 py-2 rounded-md;
 }
