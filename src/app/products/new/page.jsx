@@ -48,6 +48,7 @@ const ProductNew = () => {
           onChange={(e) => setPrice(e.target.value)} 
         />
 
+        updated
         <div>
           <button 
             type="submit"
