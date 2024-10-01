@@ -19,7 +19,6 @@ const ProductNew = () => {
 
   return (
     <div>
-      <p>Home - Products - New Product</p>
       <h1>Create new product</h1>
 
       <form onSubmit={createProduct}>

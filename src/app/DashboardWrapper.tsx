@@ -27,11 +27,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar />
       <main
         className={`${
-          isSidebarCollapsed ? "pl-20" : "pl-80"
+          isSidebarCollapsed ? "pl-5 md:pl-20" : "pl-80"
         } flex flex-col w-full h-full py-7 px-9 bg-gray-50`}
       >
         <Navbar />
-        <div className="px-10">{children}</div>
+        <div className="px-0 md:px-10">{children}</div>
       </main>
     </div>
   );

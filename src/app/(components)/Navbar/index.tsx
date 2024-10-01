@@ -32,7 +32,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center w-full mb-7 pl-10">
+    <div className="flex justify-between items-center w-full mb-7 pl-0 md:pl-10">
       {/* LEFT SIDE */}
       <div className="flex justify-between items-center gap-5">
         <button
