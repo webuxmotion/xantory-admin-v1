@@ -15,5 +15,13 @@ export async function POST(req) {
     price,
   });
 
-  return NextResponse.json({ product: productDoc }, { status: 200 });
+  return NextResponse.json(productDoc, { status: 200 });
+}
+
+export async function GET(req) {
+  await mongooseConnect();
+
+  const products = await Product.find({});
+
+  return NextResponse.json(products, { status: 200 });
 }
