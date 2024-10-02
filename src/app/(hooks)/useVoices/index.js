@@ -30,7 +30,7 @@ const useVoices = () => {
         const loadVoices = () => {
           const synth = window.speechSynthesis;
           const availableVoices = synth.getVoices().filter(el => {
-            return el.lang.includes('en');
+            return el.lang.includes('US');
           });
           setVoices(availableVoices);
     

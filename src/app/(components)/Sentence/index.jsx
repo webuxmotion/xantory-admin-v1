@@ -1,19 +1,35 @@
 "use client";
 
-import { Volume2 } from "lucide-react";
+import { DeleteIcon, Edit, Volume2 } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
-const Sentence = ({ text, handleSpeak }) => {
-
+const Sentence = ({ id, text, handleSpeak, handleDelete }) => {
   return (
     <div className="bg-blue-100 rounded-xl py-2 px-4">
       <p className="text-xl">{text}</p>
 
-      <button onClick={() => {
-        handleSpeak(text)
-      }}>
-        <Volume2 />
-      </button>
+      <div className="flex gap-10 pt-4">
+        <button
+          onClick={() => {
+            handleSpeak(text);
+          }}
+        >
+          <Volume2 />
+        </button>
+
+        <Link href={`/products/${id}`}>
+          <Edit />
+        </Link>
+
+        <button
+          onClick={() => {
+            handleDelete(id);
+          }}
+        >
+          <DeleteIcon />
+        </button>
+      </div>
     </div>
   );
 };

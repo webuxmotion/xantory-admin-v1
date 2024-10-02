@@ -1,7 +1,10 @@
+import { ADD_NUMBER } from './actionTypes';
+
 export const initialState = {
   number: 4,
   isSidebarCollapsed: false,
   isDarkMode: false,
+  voice: 0
 };
 
 export const persistIgnore = [];
@@ -12,7 +15,7 @@ export const AppReducer = (state, action) => {
       return action.value;
     }
 
-    case "add_number": {
+    case ADD_NUMBER: {
       return {
         ...state,
         number: action.value + state.number,

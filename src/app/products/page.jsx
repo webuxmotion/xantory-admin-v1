@@ -5,15 +5,46 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Sentence from "@/app/(components)/Sentence";
 import useVoices from "@/app/(hooks)/useVoices";
+import { useRouter } from "next/navigation";
+
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const ProductsPage = () => {
+  const router = useRouter()
   const [products, setProducts] = useState([]);
   const { setSelectedVoice, handleSpeak, voices, selectedVoice } = useVoices();
 
-  useEffect(() => {
+  const getProducts = () => {
     axios.get("/api/products").then((response) => {
       setProducts(response.data);
     });
+  }
+
+  const handleDelete = (id) => {
+
+    confirmAlert({
+      title: 'Confirm to delete',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            axios.delete(`/api/products?id=${id}`).then(_ => {
+              getProducts();
+            })
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    });
+  }
+
+  useEffect(() => {
+    getProducts();
   }, []);
 
   return (
@@ -41,8 +72,10 @@ const ProductsPage = () => {
           return (
             <div key={product._id} className="py-1">
               <Sentence 
+                id={product._id}
                 text={product.title} 
                 handleSpeak={handleSpeak}
+                handleDelete={handleDelete}
               />
             </div>
           );
