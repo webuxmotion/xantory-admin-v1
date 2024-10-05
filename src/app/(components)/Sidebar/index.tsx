@@ -124,6 +124,12 @@ const Sidebar = () => {
           label="Settings"
           isCollapsed={isSidebarCollapsed}
         />
+        <SidebarLink
+          href="/stt"
+          icon={UserRoundCog}
+          label="Speech To Text"
+          isCollapsed={isSidebarCollapsed}
+        />
       </div>
  
       <div className={`${isSidebarCollapsed ? "hidden" : "block"} mb-10`}>

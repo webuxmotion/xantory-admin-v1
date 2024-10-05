@@ -9,9 +9,9 @@ import { useRouter } from "next/navigation";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import SpeechToText from "../(components)/SpeechToText";
 
 const ProductsPage = () => {
-  const router = useRouter()
   const [products, setProducts] = useState([]);
   const { setSelectedVoice, handleSpeak, voices, selectedVoice } = useVoices();
 
@@ -53,6 +53,10 @@ const ProductsPage = () => {
         <Link className="btn-primary" href="/products/new">
           Add new
         </Link>
+      </div>
+
+      <div>
+        <SpeechToText />
       </div>
 
       <select
