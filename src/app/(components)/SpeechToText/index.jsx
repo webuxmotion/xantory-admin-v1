@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-const SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
+const SpeechRecognition = window && (window.SpeechRecognition || window.webkitSpeechRecognition);
 const mic = new SpeechRecognition();
 
 mic.continuous = true;
