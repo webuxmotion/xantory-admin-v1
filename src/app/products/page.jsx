@@ -5,7 +5,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Sentence from "@/app/(components)/Sentence";
 import useVoices from "@/app/(hooks)/useVoices";
-import { useRouter } from "next/navigation";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css

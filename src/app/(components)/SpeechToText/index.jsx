@@ -2,12 +2,17 @@
 
 import { useState, useEffect } from 'react';
 
-const SpeechRecognition = window && (window.SpeechRecognition || window.webkitSpeechRecognition);
-const mic = new SpeechRecognition();
+let mic = null;
 
-mic.continuous = true;
-mic.interimResults = true;
-mic.lang = "en-US";
+if (typeof window !== 'undefined') {
+  const SpeechRecognition = window && (window?.SpeechRecognition || window?.webkitSpeechRecognition);
+  mic = new SpeechRecognition();
+  
+  mic.continuous = true;
+  mic.interimResults = true;
+  mic.lang = "en-US";
+}
+
 
 const SpeechToText = () => {
   const [isListening, setIsListening] = useState(false);
