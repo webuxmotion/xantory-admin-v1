@@ -6,41 +6,54 @@ import React, { useEffect, useState } from "react";
 import Sentence from "@/app/(components)/Sentence";
 import useVoices from "@/app/(hooks)/useVoices";
 
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import SpeechToText from "../(components)/SpeechToText";
+
+let mic = null;
+
+if (typeof window !== "undefined") {
+  const SpeechRecognition =
+    window && (window?.SpeechRecognition || window?.webkitSpeechRecognition);
+  mic = new SpeechRecognition();
+
+  mic.continuous = true;
+  mic.interimResults = true;
+  mic.lang = "en-US";
+}
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [isTextShow, setIsTextShow] = useState(true);
   const { setSelectedVoice, handleSpeak, voices, selectedVoice } = useVoices();
+  const [isListen, setIsListen] = useState(false);
 
   const getProducts = () => {
     axios.get("/api/products").then((response) => {
       setProducts(response.data);
     });
-  }
+  };
 
   const handleDelete = (id) => {
-
     confirmAlert({
-      title: 'Confirm to delete',
-      message: 'Are you sure to do this.',
+      title: "Confirm to delete",
+      message: "Are you sure to do this.",
       buttons: [
         {
-          label: 'Yes',
+          label: "Yes",
           onClick: () => {
-            axios.delete(`/api/products?id=${id}`).then(_ => {
+            axios.delete(`/api/products?id=${id}`).then((_) => {
               getProducts();
-            })
-          }
+            });
+          },
         },
         {
-          label: 'No',
-          onClick: () => {}
-        }
-      ]
+          label: "No",
+          onClick: () => {},
+        },
+      ],
     });
-  }
+  };
 
   useEffect(() => {
     getProducts();
@@ -52,10 +65,6 @@ const ProductsPage = () => {
         <Link className="btn-primary" href="/products/new">
           Add new
         </Link>
-      </div>
-
-      <div>
-        <SpeechToText />
       </div>
 
       <select
@@ -70,16 +79,31 @@ const ProductsPage = () => {
         ))}
       </select>
 
+      <label className="ml-5 cursor-pointer">
+        <input
+          type="checkbox"
+          onChange={() => {
+            setIsTextShow((prev) => !prev);
+          }}
+          checked={isTextShow}
+        />
+        <span className="ml-2">{isTextShow ? "Hide text" : "Show text"}</span>
+      </label>
+
       <div>
         {products.map((product) => {
           return (
             <div key={product._id} className="py-1">
-              <Sentence 
+              <Sentence
                 id={product._id}
-                text={product.title} 
+                text={product.title}
                 handleSpeak={handleSpeak}
                 handleDelete={handleDelete}
                 image={product?.image}
+                mic={mic}
+                isTextShow={isTextShow}
+                isListenGlobal={isListen}
+                setIsListenGlobal={setIsListen}
               />
             </div>
           );
