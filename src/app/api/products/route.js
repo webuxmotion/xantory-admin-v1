@@ -7,12 +7,13 @@ export async function PUT(req) {
 
   const data = await req.json();
 
-  const { title, description, price, _id } = data;
+  const { title, description, price, image, _id } = data;
 
   await Product.updateOne({ _id }, {
     title,
     description,
     price,
+    image,
   });
 
   return NextResponse.json(true, { status: 200 });
@@ -23,12 +24,13 @@ export async function POST(req) {
 
   const data = await req.json();
 
-  const { title, description, price } = data;
+  const { title, description, price, image } = data;
 
   const productDoc = await Product.create({
     title,
     description,
     price,
+    image,
   });
 
   return NextResponse.json(productDoc, { status: 200 });

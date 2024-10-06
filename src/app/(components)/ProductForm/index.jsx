@@ -21,6 +21,10 @@ const ProductForm = (params) => {
       price,
     };
 
+    if (image) {
+      data.image = image;
+    }
+
     if (params?._id) {
       data._id = params?._id;
 
@@ -42,8 +46,6 @@ const ProductForm = (params) => {
 
       const res = await axios.post('/api/upload', data);
 
-      console.log({ data: res.data })
-
       setImage(res.data?.link);
     }
   }
@@ -64,7 +66,11 @@ const ProductForm = (params) => {
           <div className="mb-2">
             {image ? (
               <div>
-                <img src={image} alt="card picture" />
+                <img 
+                  src={image} 
+                  alt="card picture" 
+                  className="w-20"
+                />
               </div>
             ) : (
               <div>No image</div>
@@ -76,7 +82,7 @@ const ProductForm = (params) => {
               Upload
               <input 
                 type="file" 
-                className="hidden" 
+                className="hidden"
                 onChange={uploadImage}
               />
             </label>

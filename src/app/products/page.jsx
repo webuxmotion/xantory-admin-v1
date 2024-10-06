@@ -79,6 +79,7 @@ const ProductsPage = () => {
                 text={product.title} 
                 handleSpeak={handleSpeak}
                 handleDelete={handleDelete}
+                image={product?.image}
               />
             </div>
           );
