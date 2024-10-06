@@ -8,6 +8,8 @@ const ProductForm = (params) => {
   const [title, setTitle] = useState(params?.title || "");
   const [description, setDescription] = useState(params?.description || "");
   const [price, setPrice] = useState(params?.price || 0);
+  const [image, setImage] = useState(params?.image || "");
+
   const router = useRouter();
 
   const handleSubmit = async (event) => {
@@ -30,6 +32,22 @@ const ProductForm = (params) => {
     router.push("/products");
   };
 
+  const uploadImage = async (event) => {
+    const files = event.target.files;
+
+    if (files?.length > 0) {
+      const data = new FormData();
+      
+      data.append('file', files[0]);
+
+      const res = await axios.post('/api/upload', data);
+
+      console.log({ data: res.data })
+
+      setImage(res.data?.link);
+    }
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -41,6 +59,29 @@ const ProductForm = (params) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+
+          <label>Image</label>
+          <div className="mb-2">
+            {image ? (
+              <div>
+                <img src={image} alt="card picture" />
+              </div>
+            ) : (
+              <div>No image</div>
+            )}
+
+            <label
+              className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => {}}>
+              Upload
+              <input 
+                type="file" 
+                className="hidden" 
+                onChange={uploadImage}
+              />
+            </label>
+          </div>
+
           <label>Description</label>
           <textarea
             placeholder="Description"
@@ -54,7 +95,7 @@ const ProductForm = (params) => {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
-          updated
+
           <div>
             <button type="submit" className="btn-primary">
               Save
