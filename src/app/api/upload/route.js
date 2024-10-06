@@ -41,7 +41,3 @@ export async function POST(req) {
 
     return NextResponse.json({ link }, { status: 200 });
 }
-
-export const config = {
-    api: { bodyParser: false },
-};
